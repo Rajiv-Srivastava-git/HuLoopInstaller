@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Installer.Models
+{
+    public class InstallerComponent
+    {
+        public string ComponentId { get; set; } = string.Empty;
+        public string ComponentName { get; set; } = string.Empty;
+        public long ComponentSizeMB { get; set; }   // Size shown to user
+        public string DownloadUrl { get; set; } = string.Empty;
+
+        public bool IsMandatory { get; set; }
+        public List<string> IsConnectedWith { get; set; } = new();
+        public bool ManualConfiguration { get; set; }
+        public string FileToChange { get; set; } = string.Empty;
+        public string KeyToChange { get; set; } = string.Empty;
+        // Runtime properties (not from JSON)
+        public bool IsSelected { get; set; }
+        public string KeyToChangeValue { get; set; } = string.Empty;
+    }
+}

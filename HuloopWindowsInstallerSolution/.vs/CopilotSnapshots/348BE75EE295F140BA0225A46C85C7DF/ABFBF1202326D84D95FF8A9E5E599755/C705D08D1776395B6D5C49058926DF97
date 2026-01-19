@@ -1,0 +1,68 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Installer.UI
+{
+    public partial class WizardForm : Form
+    {
+        private List<UserControl> steps = new();
+        private int currentStep = 0;
+
+        public WizardForm()
+        {
+            InitializeComponent();
+            WizardTheme.ApplyTheme(this);
+            LoadSteps();
+            ShowStep(0);
+        }
+
+        private void LoadSteps()
+        {
+            steps.Add(new WelcomeStep());
+            steps.Add(new EulaStep());
+            steps.Add(new ComponentSelectionStep());
+            steps.Add(new ConfigStep());
+        }
+
+        private void ShowStep(int index)
+        {
+            bodyPanel.Controls.Clear();
+            var step = steps[index];
+            step.Dock = DockStyle.Fill;
+            bodyPanel.Controls.Add(step);
+
+            prevBtn.Enabled = index > 0;
+            nextBtn.Text = index == steps.Count - 1 ? "Finish" : "Next";
+        }
+
+        private void nextBtn_Click(object sender, EventArgs e)
+        {
+            if (currentStep < steps.Count - 1)
+            {
+                currentStep++;
+                ShowStep(currentStep);
+            }
+            else
+            {
+                MessageBox.Show("Installation Complete!");
+                Close();
+            }
+        }
+
+        private void prevBtn_Click(object sender, EventArgs e)
+        {
+            if (currentStep > 0)
+            {
+                currentStep--;
+                ShowStep(currentStep);
+            }
+        }
+    }
+}

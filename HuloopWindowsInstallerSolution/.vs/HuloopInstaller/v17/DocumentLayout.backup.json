@@ -1,0 +1,405 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\components.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\components.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\installationprogressstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\installationprogressstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\installationprogressstep.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\installationprogressstep.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\installationprogressstep.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\installationprogressstep.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|Installer.Models\\Installer.Models.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.models\\installercomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|Installer.Models\\Installer.Models.csproj|solutionrelative:installer.models\\installercomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|Installer.Models\\Installer.Models.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.models\\configurationhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|Installer.Models\\Installer.Models.csproj|solutionrelative:installer.models\\configurationhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|Installer.Models\\Installer.Models.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.models\\dictionarystringobjectjsonconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33333333-3333-3333-3333-333333333333}|Installer.Models\\Installer.Models.csproj|solutionrelative:installer.models\\dictionarystringobjectjsonconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\configstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\configstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22222222-2222-2222-2222-222222222222}|Installer.Core\\Installer.Core.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.core\\multiconfigurationsupport.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{22222222-2222-2222-2222-222222222222}|Installer.Core\\Installer.Core.csproj|solutionrelative:installer.core\\multiconfigurationsupport.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\wizardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\wizardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22222222-2222-2222-2222-222222222222}|Installer.Core\\Installer.Core.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.core\\registrymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22222222-2222-2222-2222-222222222222}|Installer.Core\\Installer.Core.csproj|solutionrelative:installer.core\\registrymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\componentselectionstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\componentselectionstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\diskspacestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\diskspacestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22222222-2222-2222-2222-222222222222}|Installer.Core\\Installer.Core.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.core\\installerstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22222222-2222-2222-2222-222222222222}|Installer.Core\\Installer.Core.csproj|solutionrelative:installer.core\\installerstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\controls\\componentitemcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\controls\\componentitemcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\diskspacestep.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\diskspacestep.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22222222-2222-2222-2222-222222222222}|Installer.Core\\Installer.Core.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.core\\registrymanager.readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{22222222-2222-2222-2222-222222222222}|Installer.Core\\Installer.Core.csproj|solutionrelative:installer.core\\registrymanager.readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\configstepdisplayexample.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\configstepdisplayexample.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\configstepscrollingguide.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\configstepscrollingguide.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\configstepoptionalfields.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\configstepoptionalfields.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\configstepreadonlyfields.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\configstepreadonlyfields.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\configstepscrollingfix.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\configstepscrollingfix.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\componentdependencyselection.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\componentdependencyselection.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|d:\\huloop\\huloopinstaller\\huloopwindowsinstallersolution\\installer.ui\\onvisiblechangedfix.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|Installer.UI\\Installer.UI.csproj|solutionrelative:installer.ui\\onvisiblechangedfix.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "InstallationProgressStep.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\InstallationProgressStep.md",
+              "RelativeDocumentMoniker": "Installer.UI\\InstallationProgressStep.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\InstallationProgressStep.md",
+              "RelativeToolTip": "Installer.UI\\InstallationProgressStep.md",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAAACsDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-15T05:50:15.381Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "InstallationProgressStep.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\InstallationProgressStep.cs",
+              "RelativeDocumentMoniker": "Installer.UI\\InstallationProgressStep.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\InstallationProgressStep.cs",
+              "RelativeToolTip": "Installer.UI\\InstallationProgressStep.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAEwCYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T05:45:57.298Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "InstallationProgressStep.Designer.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\InstallationProgressStep.Designer.cs",
+              "RelativeDocumentMoniker": "Installer.UI\\InstallationProgressStep.Designer.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\InstallationProgressStep.Designer.cs",
+              "RelativeToolTip": "Installer.UI\\InstallationProgressStep.Designer.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAIAwwHoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T05:45:21.934Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "InstallerComponent.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Models\\InstallerComponent.cs",
+              "RelativeDocumentMoniker": "Installer.Models\\InstallerComponent.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Models\\InstallerComponent.cs",
+              "RelativeToolTip": "Installer.Models\\InstallerComponent.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-19T06:28:30.875Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "components.json",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\components.json",
+              "RelativeDocumentMoniker": "Installer.UI\\components.json",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\components.json",
+              "RelativeToolTip": "Installer.UI\\components.json",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-19T06:48:35.189Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "OnVisibleChangedFix.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\OnVisibleChangedFix.md",
+              "RelativeDocumentMoniker": "Installer.UI\\OnVisibleChangedFix.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\OnVisibleChangedFix.md",
+              "RelativeToolTip": "Installer.UI\\OnVisibleChangedFix.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKEBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-15T06:02:15.059Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ConfigurationHelper.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Models\\ConfigurationHelper.cs",
+              "RelativeDocumentMoniker": "Installer.Models\\ConfigurationHelper.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Models\\ConfigurationHelper.cs",
+              "RelativeToolTip": "Installer.Models\\ConfigurationHelper.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAQwCMAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T10:13:50.37Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ConfigStepScrollingFix.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepScrollingFix.md",
+              "RelativeDocumentMoniker": "Installer.UI\\ConfigStepScrollingFix.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepScrollingFix.md",
+              "RelativeToolTip": "Installer.UI\\ConfigStepScrollingFix.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAK8BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-14T13:36:50.921Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ComponentDependencySelection.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ComponentDependencySelection.md",
+              "RelativeDocumentMoniker": "Installer.UI\\ComponentDependencySelection.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ComponentDependencySelection.md",
+              "RelativeToolTip": "Installer.UI\\ComponentDependencySelection.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-15T04:54:47.614Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DictionaryStringObjectJsonConverter.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Models\\DictionaryStringObjectJsonConverter.cs",
+              "RelativeDocumentMoniker": "Installer.Models\\DictionaryStringObjectJsonConverter.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Models\\DictionaryStringObjectJsonConverter.cs",
+              "RelativeToolTip": "Installer.Models\\DictionaryStringObjectJsonConverter.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAqwIoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T10:13:08.309Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ConfigStepReadOnlyFields.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepReadOnlyFields.md",
+              "RelativeDocumentMoniker": "Installer.UI\\ConfigStepReadOnlyFields.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepReadOnlyFields.md",
+              "RelativeToolTip": "Installer.UI\\ConfigStepReadOnlyFields.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJQBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-14T13:31:28.513Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ConfigStepOptionalFields.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepOptionalFields.md",
+              "RelativeDocumentMoniker": "Installer.UI\\ConfigStepOptionalFields.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepOptionalFields.md",
+              "RelativeToolTip": "Installer.UI\\ConfigStepOptionalFields.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKUBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-14T13:26:18.227Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ConfigStep.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStep.cs",
+              "RelativeDocumentMoniker": "Installer.UI\\ConfigStep.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStep.cs",
+              "RelativeToolTip": "Installer.UI\\ConfigStep.cs",
+              "ViewState": "AgIAAHABAAAAAAAAAAAqwIIBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T08:03:45.679Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ConfigStepScrollingGuide.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepScrollingGuide.md",
+              "RelativeDocumentMoniker": "Installer.UI\\ConfigStepScrollingGuide.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepScrollingGuide.md",
+              "RelativeToolTip": "Installer.UI\\ConfigStepScrollingGuide.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKIBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-14T12:22:00.535Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ConfigStepDisplayExample.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepDisplayExample.md",
+              "RelativeDocumentMoniker": "Installer.UI\\ConfigStepDisplayExample.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ConfigStepDisplayExample.md",
+              "RelativeToolTip": "Installer.UI\\ConfigStepDisplayExample.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFIBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-14T12:12:08.744Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MultiConfigurationSupport.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Core\\MultiConfigurationSupport.md",
+              "RelativeDocumentMoniker": "Installer.Core\\MultiConfigurationSupport.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Core\\MultiConfigurationSupport.md",
+              "RelativeToolTip": "Installer.Core\\MultiConfigurationSupport.md",
+              "ViewState": "AgIAALQAAAAAAAAAAAAAANcBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-14T10:18:44.216Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DiskSpaceStep.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\DiskSpaceStep.cs",
+              "RelativeDocumentMoniker": "Installer.UI\\DiskSpaceStep.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\DiskSpaceStep.cs",
+              "RelativeToolTip": "Installer.UI\\DiskSpaceStep.cs",
+              "ViewState": "AgIAAN8AAAAAAAAAAAAuwMsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T12:49:32.828Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "InstallerState.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Core\\InstallerState.cs",
+              "RelativeDocumentMoniker": "Installer.Core\\InstallerState.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Core\\InstallerState.cs",
+              "RelativeToolTip": "Installer.Core\\InstallerState.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA4wA0AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T13:12:14.99Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RegistryManager.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Core\\RegistryManager.cs",
+              "RelativeDocumentMoniker": "Installer.Core\\RegistryManager.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Core\\RegistryManager.cs",
+              "RelativeToolTip": "Installer.Core\\RegistryManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T04:55:11.016Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "RegistryManager.README.md",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Core\\RegistryManager.README.md",
+              "RelativeDocumentMoniker": "Installer.Core\\RegistryManager.README.md",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Core\\RegistryManager.README.md",
+              "RelativeToolTip": "Installer.Core\\RegistryManager.README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJUBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-01-13T04:57:12.418Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "WizardForm.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\WizardForm.cs",
+              "RelativeDocumentMoniker": "Installer.UI\\WizardForm.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\WizardForm.cs",
+              "RelativeToolTip": "Installer.UI\\WizardForm.cs",
+              "ViewState": "AgIAANoAAAAAAAAAAEBVwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T12:49:51.609Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ComponentSelectionStep.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ComponentSelectionStep.cs",
+              "RelativeDocumentMoniker": "Installer.UI\\ComponentSelectionStep.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\ComponentSelectionStep.cs",
+              "RelativeToolTip": "Installer.UI\\ComponentSelectionStep.cs",
+              "ViewState": "AgIAAJ8AAAAAAAAAAIBZwKQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T07:24:28.585Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "DiskSpaceStep.Designer.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\DiskSpaceStep.Designer.cs",
+              "RelativeDocumentMoniker": "Installer.UI\\DiskSpaceStep.Designer.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\DiskSpaceStep.Designer.cs",
+              "RelativeToolTip": "Installer.UI\\DiskSpaceStep.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T12:49:38.426Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ComponentItemControl.cs",
+              "DocumentMoniker": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\Controls\\ComponentItemControl.cs",
+              "RelativeDocumentMoniker": "Installer.UI\\Controls\\ComponentItemControl.cs",
+              "ToolTip": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.UI\\Controls\\ComponentItemControl.cs",
+              "RelativeToolTip": "Installer.UI\\Controls\\ComponentItemControl.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAABRwD4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T10:45:07.583Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

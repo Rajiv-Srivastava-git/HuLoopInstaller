@@ -1,0 +1,74 @@
+﻿using Installer.Core;
+using Installer.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Installer.UI
+{
+    public partial class ComponentSelectionStep : StepBase
+    {
+        private List<InstallerComponent> _components = new();
+
+        public ComponentSelectionStep()
+        {
+            InitializeComponent();
+            LoadComponents();
+        }
+
+        private void LoadComponents()
+        {
+            var jsonPath = Path.Combine(AppContext.BaseDirectory, "components.json");
+
+            if (!File.Exists(jsonPath))
+                throw new FileNotFoundException("components.json not found", jsonPath);
+            
+            string json = File.ReadAllText(jsonPath);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            _components = JsonSerializer.Deserialize<List<InstallerComponent>>(json, options)
+               ?? new List<InstallerComponent>();
+
+            flowPanel.Controls.Clear();
+
+            foreach (var comp in _components)
+            {
+                var ctrl = new ComponentItemControl();
+                ctrl.Bind(comp);
+                ctrl.SelectionChanged += OnComponentSelectionChanged;
+
+                flowPanel.Controls.Add(ctrl);
+            }
+
+            UpdateTotalSize();
+        }
+
+        private void OnComponentSelectionChanged(object? sender, bool selected)
+        {
+            UpdateTotalSize();
+        }
+
+        private void UpdateTotalSize()
+        {
+            var total = _components
+                .Where(c => c.IsSelected)
+                .Sum(c => c.ComponentSizeMB);
+
+            lblTotalSize.Text = $"Total Size: {total} MB";
+        }
+
+        public List<InstallerComponent> GetSelectedComponents()
+        {
+            return _components.Where(c => c.IsSelected).ToList();
+        }
+    }
+}

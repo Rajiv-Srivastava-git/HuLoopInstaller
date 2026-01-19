@@ -1,0 +1,217 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Installer.Core;
+using Installer.Models;
+
+namespace Installer.UI
+{
+    public partial class ConfigStep : StepBase
+    {
+        private Label lblInstallPath = null!;
+        private Dictionary<string, TextBox> configTextBoxes = new();
+
+        public ConfigStep()
+        {
+            Title.Text = "Component Configuration";
+            Description.Text = "Configure settings for the selected components.";
+
+            // No controls added in constructor - they will be added when step is shown
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (this.Visible)
+            {
+                RefreshConfigurationFields();
+            }
+        }
+
+        public void RefreshData()
+        {
+            RefreshConfigurationFields();
+        }
+
+        private void RefreshConfigurationFields()
+        {
+            // Clear existing controls
+            var controlsToRemove = Controls.Cast<Control>()
+                .Where(c => c != Title && c != Description)
+                .ToList();
+
+            foreach (var control in controlsToRemove)
+            {
+                Controls.Remove(control);
+            }
+            configTextBoxes.Clear();
+
+            var state = GetInstallerState();
+            if (state == null)
+            {
+                var errorLabel = new Label
+                {
+                    Text = "ERROR: Unable to load installation state.",
+                    Location = new Point(10, 100),
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 10),
+                    ForeColor = Color.Red
+                };
+                Controls.Add(errorLabel);
+                return;
+            }
+
+            int yPosition = 100;
+
+            // Display Installation Path (read-only)
+            var lblPathTitle = new Label
+            {
+                Text = "Installation Path:",
+                Location = new Point(10, yPosition),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+            };
+            Controls.Add(lblPathTitle);
+
+            lblInstallPath = new Label
+            {
+                Text = state.AppDir,
+                Location = new Point(150, yPosition),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.FromArgb(0, 122, 204)
+            };
+            Controls.Add(lblInstallPath);
+
+            yPosition += 40;
+
+            // Get components that require manual configuration
+            var componentsNeedingConfig = state.SelectedComponents
+                .Where(c => c.ManualConfiguration)
+                .ToList();
+
+            if (componentsNeedingConfig.Count == 0)
+            {
+                var noConfigLabel = new Label
+                {
+                    Text = "No manual configuration is required for the selected components.",
+                    Location = new Point(10, yPosition),
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 10),
+                    ForeColor = Color.Green
+                };
+                Controls.Add(noConfigLabel);
+                return;
+            }
+
+            // Add separator
+            var separator = new Label
+            {
+                Text = "Component Configuration Settings:",
+                Location = new Point(10, yPosition),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+            };
+            Controls.Add(separator);
+            yPosition += 35;
+
+            // Create configuration fields for each component
+            foreach (var component in componentsNeedingConfig)
+            {
+                // Component name label with groupbox-like styling
+                var componentLabel = new Label
+                {
+                    Text = $"● {component.ComponentName}",
+                    Location = new Point(10, yPosition),
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(51, 51, 51)
+                };
+                Controls.Add(componentLabel);
+                yPosition += 30;
+
+                // Key/Setting label
+                var keyLabel = new Label
+                {
+                    Text = $"  {component.KeyToChange}:",
+                    Location = new Point(30, yPosition),
+                    Width = 250,
+                    Font = new Font("Segoe UI", 9),
+                    ForeColor = Color.FromArgb(85, 85, 85)
+                };
+                Controls.Add(keyLabel);
+
+                // Value textbox
+                var valueTextBox = new TextBox
+                {
+                    Width = 350,
+                    Location = new Point(290, yPosition - 2),
+                    Font = new Font("Segoe UI", 9)
+                };
+
+                // Pre-populate with existing value if available
+                string configKey = $"{component.ComponentId}:{component.KeyToChange}";
+                if (state.ComponentConfigurationValues.ContainsKey(configKey))
+                {
+                    valueTextBox.Text = state.ComponentConfigurationValues[configKey];
+                }
+
+                configTextBoxes[configKey] = valueTextBox;
+                Controls.Add(valueTextBox);
+
+                // File info label (smaller, informational)
+                var fileLabel = new Label
+                {
+                    Text = $"  File: {component.FileToChange}",
+                    Location = new Point(30, yPosition + 30),
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 8),
+                    ForeColor = Color.Gray
+                };
+                Controls.Add(fileLabel);
+
+                yPosition += 70;
+            }
+        }
+
+        private InstallerState? GetInstallerState()
+        {
+            var wizardForm = FindForm() as WizardForm;
+            return wizardForm?.State;
+        }
+
+        public bool ValidateAndSaveConfiguration()
+        {
+            var state = GetInstallerState();
+            if (state == null)
+                return false;
+
+            // Save all configuration values
+            foreach (var kvp in configTextBoxes)
+            {
+                string value = kvp.Value.Text.Trim();
+
+                // Validate required fields
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    MessageBox.Show(
+                        $"Please provide a value for: {kvp.Key.Split(':')[1]}",
+                        "Configuration Required",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                state.ComponentConfigurationValues[kvp.Key] = value;
+            }
+
+            return true;
+        }
+    }
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "ComponentId": "CLI",
+    "ComponentName": "Huloop CLI",
+    "DownloadUrl": "https://qa.huloop.ai/latest/Huloop_CLI.zip",
+    "ComponentSizeMB": 750,
+    "IsMandatory": false,
+    "IsConnectedWith": [],
+    "ManualConfiguration": true,
+    "ConfigurationMode": "Patch",
+    "ConfigFormat": "ini",
+    "ConfigTarget": "Config/server.cnf",
+    "Configuration": {
+      "ai.huloop.server.url": "https://qa.huloop.ai"
+    }
+  },
+  {
+    "ComponentId": "DESKTOP_AGENT",
+    "ComponentName": "Huloop Desktop Agent",
+    "DownloadUrl": "https://qa.huloop.ai:/zips/newAgent/HuLoop.zip",
+    "ComponentSizeMB": 700,
+    "IsMandatory": false,
+    "IsConnectedWith": [ "DESKTOP_DRIVER" ],
+    "ManualConfiguration": false,
+    "ConfigurationMode": "",
+    "ConfigFormat": "",
+    "ConfigTarget": "",
+    "Configuration": {}
+  },
+  {
+    "ComponentId": "DESKTOP_DRIVER",
+    "ComponentName": "Huloop Desktop Driver",
+    "DownloadUrl": "https://qa.huloop.ai:/zips/HuLoopDesktopDriver.zip",
+    "ComponentSizeMB": 80,
+    "IsMandatory": false,
+    "IsConnectedWith": [],
+    "ManualConfiguration": false,
+    "ConfigurationMode": "",
+    "ConfigFormat": "",
+    "ConfigTarget": "",
+    "Configuration": {}
+  },
+  {
+    "ComponentId": "DESKTOP_RECORDER",
+    "ComponentName": "Huloop Desktop Recorder",
+    "DownloadUrl": "https://qa.huloop.ai:/zips/WindowsDesktopRecorder.zip",
+    "ComponentSizeMB": 260,
+    "IsMandatory": false,
+    "IsConnectedWith": [],
+    "ManualConfiguration": false,
+    "ConfigurationMode": "",
+    "ConfigFormat": "",
+    "ConfigTarget": "",
+    "Configuration": {}
+  },
+  {
+    "ComponentId": "SCHEDULER",
+    "ComponentName": "Huloop Scheduler",
+    "DownloadUrl": "https://qa.huloop.ai/latest/HuloopScheduler.zip",
+    "ComponentSizeMB": 120,
+    "IsMandatory": false,
+    "IsConnectedWith": [ "CLI" ],
+    "ManualConfiguration": true,
+    "ConfigurationMode": "Overwrite",
+    "ConfigFormat": "json",
+    "ConfigTarget": "appsettings.json",
+    "Configuration": {
+      "AppSettings": {
+        "ApplicationName": "HuLoop.Schedulers",
+        "Version": "1.0.0",
+        "SchedulerId": "",
+        "Triggers": [
+          {
+            "TriggerType": "Workflow",
+            "RunSchedule": "0 0 0 0 5",
+            "HostApiUrl": "https://qa.huloop.ai:8443/",
+            "ExePath": "..\\..\\HuloopCLI\\HuLoopCLI.exe",
+            "LogFilePath": "..\\..\\Logs\\Workflow\\"
+          },
+          {
+            "TriggerType": "Automation",
+            "RunSchedule": "0 0 0 1 0",
+            "HostApiUrl": "https://qa.huloop.ai:8443/",
+            "ExePath": "..\\..\\HuloopCLI\\HuLoopCLI.exe",
+            "LogFilePath": "..\\..\\Logs\\Automation\\"
+          },
+          {
+            "TriggerType": "IAB",
+            "RunSchedule": "0 0 0 0 10",
+            "HostApiUrl": "https://qa.huloop.ai:8443/",
+            "ExePath": "..\\..\\HuloopCLI\\HuLoopCLI.exe",
+            "LogFilePath": "..\\..\\Logs\\IAB\\"
+          }
+        ]
+      }
+    }
+  }
+]

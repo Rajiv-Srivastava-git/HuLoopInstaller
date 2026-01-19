@@ -1,0 +1,53 @@
+﻿namespace Installer.UI
+{
+    partial class ComponentSelectionStep
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+        private FlowLayoutPanel flowPanel;
+        private Label lblTotalSize;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+
+            flowPanel = new FlowLayoutPanel();
+            lblTotalSize = new Label();
+
+            flowPanel.Dock = DockStyle.Top;
+            flowPanel.Height = 300;
+            flowPanel.AutoScroll = true;
+
+            lblTotalSize.Dock = DockStyle.Bottom;
+            lblTotalSize.Height = 30;
+            lblTotalSize.TextAlign = ContentAlignment.MiddleRight;
+
+            Controls.Add(flowPanel);
+            Controls.Add(lblTotalSize);
+        }
+
+        #endregion
+    }
+}

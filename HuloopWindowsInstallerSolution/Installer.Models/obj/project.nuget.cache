@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Tnq+wvXTgw0=",
+  "success": true,
+  "projectFilePath": "D:\\HuLoop\\HuloopInstaller\\HuloopWindowsInstallerSolution\\Installer.Models\\Installer.Models.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rajiv.srivastava\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.57\\microsoft.windows.sdk.net.ref.10.0.19041.57.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,114 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Installer.Core;
+
+namespace Installer.UI
+{
+    public partial class WizardForm : Form
+    {
+        private List<UserControl> steps = new();
+        private int currentStep = 0;
+
+        public InstallerState State { get; private set; } = new InstallerState();
+
+        public WizardForm()
+        {
+            InitializeComponent();
+            WizardTheme.ApplyTheme(this);
+            LoadSteps();
+            ShowStep(0);
+        }
+
+        private void LoadSteps()
+        {
+            steps.Add(new WelcomeStep());
+            steps.Add(new EulaStep());
+            steps.Add(new ComponentSelectionStep());
+            steps.Add(new DiskSpaceStep());
+            steps.Add(new ConfigStep());
+        }
+
+        private void ShowStep(int index)
+        {
+            bodyPanel.Controls.Clear();
+            var step = steps[index];
+            step.Dock = DockStyle.Fill;
+            bodyPanel.Controls.Add(step);
+
+            prevBtn.Enabled = index > 0;
+            nextBtn.Text = index == steps.Count - 1 ? "Finish" : "Next";
+        }
+
+        private void nextBtn_Click(object sender, EventArgs e)
+        {
+            // Validate and collect data from current step before proceeding
+            if (!ValidateAndCollectCurrentStepData())
+                return;
+
+            if (currentStep < steps.Count - 1)
+            {
+                currentStep++;
+                ShowStep(currentStep);
+            }
+            else
+            {
+                MessageBox.Show("Installation Complete!");
+                Close();
+            }
+        }
+
+        private bool ValidateAndCollectCurrentStepData()
+        {
+            var currentStepControl = steps[currentStep];
+
+            // Collect and validate ComponentSelectionStep
+            if (currentStepControl is ComponentSelectionStep componentStep)
+            {
+                var selectedComponents = componentStep.GetSelectedComponents();
+                if (selectedComponents.Count == 0)
+                {
+                    MessageBox.Show("Please select at least one component to install.", "No Components Selected",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+                State.SelectedComponents = selectedComponents;
+            }
+
+            // Validate DiskSpaceStep
+            if (currentStepControl is DiskSpaceStep diskSpaceStep)
+            {
+                if (!diskSpaceStep.HasSufficientSpace())
+                {
+                    var result = MessageBox.Show(
+                        "You do not have sufficient disk space for the selected components.\n\n" +
+                        "Do you want to continue anyway? (Not recommended)",
+                        "Insufficient Disk Space",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.No)
+                        return false;
+                }
+                State.AppDir = diskSpaceStep.GetInstallPath();
+            }
+
+            return true;
+        }
+
+        private void prevBtn_Click(object sender, EventArgs e)
+        {
+            if (currentStep > 0)
+            {
+                currentStep--;
+                ShowStep(currentStep);
+            }
+        }
+    }
+}

@@ -1,0 +1,241 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Installer.Core;
+using Installer.Models;
+
+namespace Installer.UI
+{
+    public partial class DiskSpaceStep : StepBase
+    {
+        private Label lblRequiredSpace = null!;
+        private Label lblAvailableSpace = null!;
+        private Label lblStatus = null!;
+        private TextBox txtInstallPath = null!;
+        private Button btnBrowse = null!;
+
+        public DiskSpaceStep()
+        {
+            InitializeComponent();
+            SetupControls();
+            Title.Text = "Disk Space Check";
+            Description.Text = "Verify that you have sufficient disk space for the selected components.";
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (this.Visible)
+            {
+                // Refresh when step becomes visible
+                RefreshData();
+            }
+        }
+
+        public void RefreshData()
+        {
+            UpdateDiskSpaceInfo();
+        }
+
+        private void SetupControls()
+        {
+            // Install Path Label
+            var lblPath = new Label
+            {
+                Text = "Install Path:",
+                Location = new Point(10, 100),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 10)
+            };
+
+            // Install Path TextBox
+            txtInstallPath = new TextBox
+            {
+                Width = 400,
+                Location = new Point(120, 98),
+                Font = new Font("Segoe UI", 10),
+                Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "HuLoop")
+            };
+            txtInstallPath.TextChanged += OnInstallPathChanged;
+
+            // Browse Button
+            btnBrowse = new Button
+            {
+                Text = "Browse...",
+                Location = new Point(530, 96),
+                Size = new Size(90, 28),
+                Font = new Font("Segoe UI", 9)
+            };
+            btnBrowse.Click += OnBrowseClick;
+
+            // Required Space Label
+            lblRequiredSpace = new Label
+            {
+                Text = "Required Space: Calculating...",
+                Location = new Point(10, 150),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+            };
+
+            // Available Space Label
+            lblAvailableSpace = new Label
+            {
+                Text = "Available Space: Calculating...",
+                Location = new Point(10, 180),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+            };
+
+            // Status Label
+            lblStatus = new Label
+            {
+                Location = new Point(10, 210),
+                Size = new Size(600, 60),
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.Green
+            };
+
+            Controls.Add(lblPath);
+            Controls.Add(txtInstallPath);
+            Controls.Add(btnBrowse);
+            Controls.Add(lblRequiredSpace);
+            Controls.Add(lblAvailableSpace);
+            Controls.Add(lblStatus);
+        }
+
+        private void OnBrowseClick(object? sender, EventArgs e)
+        {
+            using var dialog = new FolderBrowserDialog
+            {
+                Description = "Select installation directory",
+                ShowNewFolderButton = true,
+                SelectedPath = txtInstallPath.Text
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                txtInstallPath.Text = dialog.SelectedPath;
+            }
+        }
+
+        private void OnInstallPathChanged(object? sender, EventArgs e)
+        {
+            UpdateDiskSpaceInfo();
+        }
+
+        private void UpdateDiskSpaceInfo()
+        {
+            try
+            {
+                // Get selected components from InstallerState
+                var state = GetInstallerState();
+
+                if (state?.SelectedComponents == null || state.SelectedComponents.Count == 0)
+                {
+                    lblRequiredSpace.Text = "Required Space: No components selected";
+                    lblAvailableSpace.Text = "Available Space: -";
+                    lblStatus.Text = "Please select components in the previous step.";
+                    lblStatus.ForeColor = Color.Orange;
+                    return;
+                }
+
+                long requiredSpaceMB = state.SelectedComponents.Sum(c => c.ComponentSizeMB);
+
+                // Add 10% buffer for temporary files and installation overhead
+                long requiredSpaceWithBuffer = (long)(requiredSpaceMB * 1.1);
+
+                lblRequiredSpace.Text = $"Required Space: {requiredSpaceWithBuffer:N0} MB ({requiredSpaceWithBuffer / 1024.0:F2} GB)";
+
+                // Get available disk space
+                string installPath = txtInstallPath.Text;
+                if (!string.IsNullOrWhiteSpace(installPath))
+                {
+                    string driveLetter = Path.GetPathRoot(installPath) ?? "C:\\";
+                    var driveInfo = new DriveInfo(driveLetter);
+
+                    if (!driveInfo.IsReady)
+                    {
+                        lblAvailableSpace.Text = $"Available Space: Drive {driveLetter} is not ready";
+                        lblStatus.Text = "WARNING: The selected drive is not accessible. Please choose a different installation location.";
+                        lblStatus.ForeColor = Color.Red;
+                        return;
+                    }
+
+                    long availableSpaceMB = driveInfo.AvailableFreeSpace / (1024 * 1024);
+
+                    lblAvailableSpace.Text = $"Available Space on {driveLetter}: {availableSpaceMB:N0} MB ({availableSpaceMB / 1024.0:F2} GB)";
+
+                    // Check if there's enough space
+                    if (availableSpaceMB >= requiredSpaceWithBuffer)
+                    {
+                        long remainingSpace = availableSpaceMB - requiredSpaceWithBuffer;
+                        lblStatus.Text = $"Disk space verification successful.\n{remainingSpace:N0} MB ({remainingSpace / 1024.0:F2} GB) will be available on {driveLetter} after installation.";
+                        lblStatus.ForeColor = Color.Green;
+                    }
+                    else
+                    {
+                        long shortage = requiredSpaceWithBuffer - availableSpaceMB;
+                        lblStatus.Text = $"WARNING: Insufficient disk space on {driveLetter}\nAn additional {shortage:N0} MB ({shortage / 1024.0:F2} GB) is required to proceed with installation.\nPlease free up disk space or select a different installation location.";
+                        lblStatus.ForeColor = Color.Red;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Text = $"ERROR: Unable to verify disk space. {ex.Message}";
+                lblStatus.ForeColor = Color.Red;
+            }
+        }
+
+        private InstallerState? GetInstallerState()
+        {
+            // Find the parent wizard form and get the installer state
+            var wizardForm = FindForm() as WizardForm;
+            if (wizardForm != null)
+            {
+                return wizardForm.State;
+            }
+            return null;
+        }
+
+        public bool HasSufficientSpace()
+        {
+            try
+            {
+                var state = GetInstallerState();
+                long requiredSpaceMB = (long)((state?.SelectedComponents?.Sum(c => c.ComponentSizeMB) ?? 0) * 1.1);
+
+                string installPath = txtInstallPath.Text;
+                if (!string.IsNullOrWhiteSpace(installPath))
+                {
+                    string driveLetter = Path.GetPathRoot(installPath) ?? "C:\\";
+                    var driveInfo = new DriveInfo(driveLetter);
+
+                    if (!driveInfo.IsReady)
+                        return false;
+
+                    long availableSpaceMB = driveInfo.AvailableFreeSpace / (1024 * 1024);
+
+                    return availableSpaceMB >= requiredSpaceMB;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return false;
+        }
+
+        public string GetInstallPath()
+        {
+            return txtInstallPath.Text;
+        }
+    }
+}

@@ -1,0 +1,181 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Installer.Models
+{
+ /// <summary>
+  /// Helper class to flatten nested configuration dictionaries into key-value pairs
+    /// </summary>
+  public static class ConfigurationHelper
+    {
+        /// <summary>
+ /// Flattens a nested configuration dictionary into a flat list of key-value pairs
+        /// Example: {"AppSettings": {"Version": "1.0"}} becomes "AppSettings.Version" = "1.0"
+        /// </summary>
+        public static Dictionary<string, string> FlattenConfiguration(Dictionary<string, object> configuration, string parentKey = "")
+   {
+         var result = new Dictionary<string, string>();
+
+     foreach (var kvp in configuration)
+  {
+     string key = string.IsNullOrEmpty(parentKey) ? kvp.Key : $"{parentKey}.{kvp.Key}";
+
+         if (kvp.Value == null)
+    {
+result[key] = string.Empty;
+   }
+            else if (kvp.Value is string stringValue)
+ {
+  result[key] = stringValue;
+     }
+    else if (kvp.Value is Dictionary<string, object> nestedDict)
+    {
+     // Recursively flatten nested objects
+       var nested = FlattenConfiguration(nestedDict, key);
+    foreach (var nestedKvp in nested)
+         {
+     result[nestedKvp.Key] = nestedKvp.Value;
+      }
+         }
+            else if (kvp.Value is List<object> list)
+  {
+     // For arrays, we'll serialize them as JSON for simplicity
+ result[key] = System.Text.Json.JsonSerializer.Serialize(list);
+      }
+            else
+ {
+       // For other types (numbers, booleans), convert to string
+       result[key] = kvp.Value.ToString() ?? string.Empty;
+         }
+      }
+
+      return result;
+        }
+
+    /// <summary>
+  /// Unflattens a flat dictionary back into a nested structure
+    /// Example: "AppSettings.Version" = "1.0" becomes {"AppSettings": {"Version": "1.0"}}
+        /// </summary>
+   public static Dictionary<string, object> UnflattenConfiguration(Dictionary<string, string> flatConfig)
+     {
+            var result = new Dictionary<string, object>();
+
+            foreach (var kvp in flatConfig)
+          {
+       var keys = kvp.Key.Split('.');
+  Dictionary<string, object> current = result;
+
+    for (int i = 0; i < keys.Length - 1; i++)
+    {
+ if (!current.ContainsKey(keys[i]))
+       {
+  current[keys[i]] = new Dictionary<string, object>();
+  }
+           current = (Dictionary<string, object>)current[keys[i]];
+       }
+
+        // Try to parse the value as appropriate type
+  current[keys[^1]] = ParseValue(kvp.Value);
+  }
+
+            return result;
+ }
+
+      /// <summary>
+ /// Attempts to parse a string value into the appropriate type
+   /// </summary>
+ private static object ParseValue(string value)
+     {
+     if (string.IsNullOrWhiteSpace(value))
+    {
+     return value;
+       }
+
+      // Try boolean
+    if (bool.TryParse(value, out bool boolValue))
+{
+     return boolValue;
+            }
+
+ // Try integer
+      if (long.TryParse(value, out long longValue))
+         {
+return longValue;
+   }
+
+// Try double
+if (double.TryParse(value, out double doubleValue))
+  {
+     return doubleValue;
+ }
+
+  // Try JSON array or object
+ if ((value.StartsWith("[") && value.EndsWith("]")) || 
+      (value.StartsWith("{") && value.EndsWith("}")))
+ {
+   try
+      {
+      return System.Text.Json.JsonSerializer.Deserialize<object>(value);
+   }
+      catch
+     {
+  // If parsing fails, return as string
+         }
+   }
+
+   return value;
+  }
+
+        /// <summary>
+        /// Gets a display-friendly label for a configuration key
+   /// Example: "AppSettings.Triggers[0].RunSchedule" becomes "Triggers [Item 0] Run Schedule"
+    /// </summary>
+ public static string GetDisplayLabel(string key)
+  {
+       // Remove parent prefixes for cleaner display
+       var parts = key.Split('.');
+ if (parts.Length > 1)
+  {
+    // Skip the root level (e.g., "AppSettings")
+     parts = parts.Skip(1).ToArray();
+   }
+
+     return string.Join(" > ", parts);
+    }
+
+ /// <summary>
+     /// Checks if a configuration key represents an array item
+   /// </summary>
+    public static bool IsArrayItem(string key)
+        {
+  return key.Contains("[") && key.Contains("]");
+        }
+
+        /// <summary>
+        /// Gets the original nested path for display (e.g., "AppSettings > Triggers > Item 0 > RunSchedule")
+  /// </summary>
+   public static string GetHierarchicalDisplay(string flatKey)
+   {
+     var parts = flatKey.Split('.');
+    var display = new List<string>();
+
+     foreach (var part in parts)
+   {
+        // Handle array indices
+  if (part.Contains("[") && part.Contains("]"))
+   {
+var propName = part.Substring(0, part.IndexOf('['));
+    var index = part.Substring(part.IndexOf('[') + 1, part.IndexOf(']') - part.IndexOf('[') - 1);
+ display.Add($"{propName} [Item {index}]");
+ }
+            else
+      {
+          display.Add(part);
+    }
+      }
+
+            return string.Join(" > ", display);
+    }
+    }
+}

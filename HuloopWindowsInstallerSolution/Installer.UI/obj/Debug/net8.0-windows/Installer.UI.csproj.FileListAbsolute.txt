@@ -1,0 +1,4 @@
+C:\Users\rajiv.srivastava\Downloads\HuloopCustomInstallerSolution\Installer.UI\obj\Debug\net8.0-windows\Installer.UI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rajiv.srivastava\Downloads\HuloopCustomInstallerSolution\Installer.UI\obj\Debug\net8.0-windows\Installer.UI.AssemblyInfoInputs.cache
+C:\Users\rajiv.srivastava\Downloads\HuloopCustomInstallerSolution\Installer.UI\obj\Debug\net8.0-windows\Installer.UI.AssemblyInfo.cs
+C:\Users\rajiv.srivastava\Downloads\HuloopCustomInstallerSolution\Installer.UI\obj\Debug\net8.0-windows\Installer.UI.csproj.CoreCompileInputs.cache

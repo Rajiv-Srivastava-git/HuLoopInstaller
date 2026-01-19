@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="ComponentSelectionStep.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="ConfigStep.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\ComponentItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="DiskSpaceStep.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="EulaStep.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="InstallationProgressStep.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="StepBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="WelcomeStep.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="WizardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Installer.UI
+{
+    public partial class ConfigStep : StepBase
+    {
+        public ConfigStep()
+        {
+            Title.Text = "Configuration";
+            Description.Text = "Set the configuration options before proceeding.";
+
+            var lbl = new Label { Text = "Install Path:", Location = new Point(0, 100) };
+            var txt = new TextBox { Width = 350, Location = new Point(100, 100) };
+
+            Controls.Add(lbl);
+            Controls.Add(txt);
+        }
+    }
+}
