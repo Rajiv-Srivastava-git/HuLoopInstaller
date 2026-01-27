@@ -6,8 +6,6 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private FlowLayoutPanel flowPanel;
-        private Label lblTotalSize;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -32,20 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-
-            flowPanel = new FlowLayoutPanel();
-            lblTotalSize = new Label();
-
-            flowPanel.Dock = DockStyle.Top;
-            flowPanel.Height = 300;
-            flowPanel.AutoScroll = true;
-
-            lblTotalSize.Dock = DockStyle.Bottom;
-            lblTotalSize.Height = 30;
-            lblTotalSize.TextAlign = ContentAlignment.MiddleRight;
-
-            Controls.Add(flowPanel);
-            Controls.Add(lblTotalSize);
         }
 
         #endregion

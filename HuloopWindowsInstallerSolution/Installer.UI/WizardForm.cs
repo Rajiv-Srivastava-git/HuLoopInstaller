@@ -43,17 +43,36 @@ namespace Installer.UI
             step.Dock = DockStyle.Fill;
             bodyPanel.Controls.Add(step);
 
-            prevBtn.Enabled = index > 0;
+            // Hide Back button on first step (Welcome step)
+            if (index == 0)
+            {
+                prevBtn.Visible = false;
+            }
+            else
+            {
+                prevBtn.Visible = true;
+                prevBtn.Enabled = true;
+            }
+
             nextBtn.Text = index == steps.Count - 1 ? "Finish" : "Next";
 
+            // Handle EulaStep - disable Next until accepted
+            if (step is EulaStep eulaStep)
+            {
+                // Next button will be managed by EulaStep checkbox
+                nextBtn.Enabled = eulaStep.IsAccepted;
+                nextBtn.BackColor = eulaStep.IsAccepted
+                    ? Color.FromArgb(0, 122, 204)
+                    : Color.Gray;
+            }
             // Refresh data for DiskSpaceStep when it's shown
-            if (step is DiskSpaceStep diskSpaceStep)
+            else if (step is DiskSpaceStep diskSpaceStep)
             {
                 diskSpaceStep.RefreshData();
             }
 
             // Refresh data for ConfigStep when it's shown
-            if (step is ConfigStep configStep)
+            else if (step is ConfigStep configStep)
             {
                 configStep.RefreshData();
                 // ConfigStep will manage the button state itself
@@ -62,7 +81,7 @@ namespace Installer.UI
             else if (step is InstallationProgressStep progressStep)
             {
                 // Disable navigation buttons during installation
-                prevBtn.Enabled = false;
+                prevBtn.Visible = false;  // Also hide back button during installation
                 nextBtn.Enabled = false;
                 nextBtn.Text = "Finish";
 
@@ -166,6 +185,20 @@ namespace Installer.UI
         private bool ValidateAndCollectCurrentStepData()
         {
             var currentStepControl = steps[currentStep];
+
+            // Validate EulaStep - ensure license is accepted
+            if (currentStepControl is EulaStep eulaStep)
+            {
+                if (!eulaStep.IsAccepted)
+                {
+                    MessageBox.Show(
+                        "You must accept the license agreement to proceed.",
+                        "License Agreement Required",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
 
             // Collect and validate ComponentSelectionStep
             if (currentStepControl is ComponentSelectionStep componentStep)

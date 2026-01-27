@@ -374,24 +374,86 @@ namespace Installer.Models
         public static string GetHierarchicalDisplay(string flatKey)
         {
             var parts = flatKey.Split('.');
-            var display = new List<string>();
+      var display = new List<string>();
 
             foreach (var part in parts)
-            {
-                // Handle array indices
-                if (part.Contains("[") && part.Contains("]"))
+    {
+     // Handle array indices
+    if (part.Contains("[") && part.Contains("]"))
+   {
+        var propName = part.Substring(0, part.IndexOf('['));
+   var index = part.Substring(part.IndexOf('[') + 1, part.IndexOf(']') - part.IndexOf('[') - 1);
+   display.Add($"{propName} [Item {index}]");
+       }
+  else
+      {
+      display.Add(part);
+   }
+       }
+
+      return string.Join(" > ", display);
+        }
+
+        /// <summary>
+ /// Splits a flattened key into individual parts
+        /// Example: "AppSettings.Triggers[0].ExePath" -> ["AppSettings", "Triggers", "[0]", "ExePath"]
+        /// </summary>
+        public static string[] SplitKey(string flatKey)
+        {
+            var parts = new List<string>();
+   var segments = flatKey.Split('.');
+
+    foreach (var segment in segments)
+          {
+                if (segment.Contains('['))
                 {
-                    var propName = part.Substring(0, part.IndexOf('['));
-                    var index = part.Substring(part.IndexOf('[') + 1, part.IndexOf(']') - part.IndexOf('[') - 1);
-                    display.Add($"{propName} [Item {index}]");
+                    // Handle array notation: "Triggers[0]"
+  var propName = segment.Substring(0, segment.IndexOf('['));
+          var indexPart = segment.Substring(segment.IndexOf('['));
+    
+    parts.Add(propName);
+        parts.Add(indexPart);
                 }
-                else
-                {
-                    display.Add(part);
-                }
+  else
+              {
+  parts.Add(segment);
+     }
             }
 
-            return string.Join(" > ", display);
+    return parts.ToArray();
+        }
+
+        /// <summary>
+  /// Checks if a key part is an array index and extracts the array name and index
+ /// Example: "[0]" -> true, arrayName="", index=0
+        /// Example: "Triggers[0]" -> true, arrayName="Triggers", index=0
+        /// </summary>
+        public static bool IsArrayIndex(string keyPart, out string arrayName, out int index)
+        {
+    arrayName = string.Empty;
+     index = -1;
+
+            if (!keyPart.Contains('[') || !keyPart.Contains(']'))
+         return false;
+
+   try
+    {
+         int bracketStart = keyPart.IndexOf('[');
+int bracketEnd = keyPart.IndexOf(']');
+
+  if (bracketStart > 0)
+                {
+           arrayName = keyPart.Substring(0, bracketStart);
+       }
+
+                string indexStr = keyPart.Substring(bracketStart + 1, bracketEnd - bracketStart - 1);
+         index = int.Parse(indexStr);
+return true;
+       }
+          catch
+            {
+     return false;
+     }
         }
     }
 }

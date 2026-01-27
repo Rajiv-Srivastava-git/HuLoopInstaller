@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Installer.Core;
 using Installer.Models;
@@ -14,35 +10,82 @@ namespace Installer.UI
 {
     public partial class ConfigStep : StepBase
     {
-        private Label lblInstallPath = null!;
-        private Dictionary<string, TextBox> configTextBoxes = new();
-        private Label? mandatoryInfoLabel;
         private Panel scrollPanel = null!;
+        private Dictionary<string, TextBox> configTextBoxes = new();
+        private Label lblInstallPath = null!;
 
+        // Field descriptions to help users
+        private static readonly Dictionary<string, string> FieldDescriptions = new()
+    {
+// General fields
+     { "ApplicationName", "The name of the application as it will appear in the system" },
+            { "SchedulerId", "Unique identifier for the scheduler (leave blank for auto-generation)" },
+     { "Version", "Version number of the component" },
+
+         // Trigger fields
+       { "ExePath", "Full path to the executable that will be triggered (e.g., ..\\HuLoopCLI\\HuLoopCLI.exe)" },
+            { "HostApiUrl", "API endpoint URL (e.g., https://qa.huloop.ai:8443/)" },
+ { "LogFilePath", "Directory where log files will be stored (e.g., ..\\Logs\\Workflow\\)" },
+       { "RunSchedule", "Cron expression: 5 space-separated values (month day hour minute second)" },
+    { "TriggerType", "Type of trigger mechanism (Workflow or Automation)" },
+
+   // Server fields
+   { "ai.huloop.server.url", "HuLoop server URL for API communication" },
+            { "Port", "Network port number for the service" },
+     { "Timeout", "Connection timeout in seconds" },
+      };
+
+        // Read-only fields that should not be editable
+        private static readonly HashSet<string> ReadOnlyFields = new()
+        {
+            "TriggerType",      // Already read-only
+      "ApplicationName",  // NEW: Read-only for Scheduler
+        "SchedulerId",  // NEW: Read-only for Scheduler
+     "Version"           // NEW: Read-only for Scheduler
+ };
         public ConfigStep()
         {
+            InitializeComponent();
+
             Title.Text = "Component Configuration";
             Description.Text = "Configure settings for the selected components.";
 
-            // Create scrollable panel for configuration fields
+            BuildLayout();
+        }
+
+        // ===================== LAYOUT =====================
+        private void BuildLayout()
+        {
+            var host = ContentPanel;
+            host.Controls.Clear();
+
             scrollPanel = new Panel
             {
-                Location = new Point(10, 90), // Below title and description
-                Size = new Size(Width - 20, Height - 100),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
+                Dock = DockStyle.Fill,
                 AutoScroll = true,
-                BackColor = Color.White
+                BackColor = WizardTheme.Colors.Surface
             };
-            Controls.Add(scrollPanel);
+
+            // Optional border
+            scrollPanel.Paint += (s, e) =>
+            {
+                using var pen = new Pen(WizardTheme.Colors.BorderLight);
+                e.Graphics.DrawRectangle(
+          pen,
+        0,
+             0,
+                scrollPanel.Width - 1,
+       scrollPanel.Height - 1);
+            };
+
+            host.Controls.Add(scrollPanel);
         }
 
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
-            if (this.Visible)
-            {
+            if (Visible)
                 RefreshConfigurationFields();
-            }
         }
 
         public void RefreshData()
@@ -50,159 +93,121 @@ namespace Installer.UI
             RefreshConfigurationFields();
         }
 
+        // ===================== UI GENERATION =====================
         private void RefreshConfigurationFields()
         {
-            // Clear existing controls from scroll panel
             scrollPanel.Controls.Clear();
             configTextBoxes.Clear();
-            
-            // Reset scroll position to top
+
+            scrollPanel.SuspendLayout();
             scrollPanel.AutoScrollPosition = new Point(0, 0);
 
             var state = GetInstallerState();
             if (state == null)
             {
-                var errorLabel = new Label
-                {
-                    Text = "ERROR: Unable to load installation state.",
-                    Location = new Point(10, 10),
-                    AutoSize = true,
-                    Font = new Font("Segoe UI", 10),
-                    ForeColor = Color.Red
-                };
-                scrollPanel.Controls.Add(errorLabel);
-                UpdateFinishButtonState();
+                AddLabel("ERROR: Unable to load installation state.", 10, true, WizardTheme.Colors.Error);
+                scrollPanel.ResumeLayout();
                 return;
             }
 
-            int yPosition = 10;
+            int y = 12;
 
-            // Display Installation Path (read-only)
-            var lblPathTitle = new Label
-            {
-                Text = "Installation Path:",
-                Location = new Point(10, yPosition),
-                AutoSize = true,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
-            };
-            scrollPanel.Controls.Add(lblPathTitle);
-
+            // ---- Install path - Highlighted but not link-like ----
+            AddLabel("Installation Path:", y, true);
             lblInstallPath = new Label
             {
                 Text = state.AppDir,
-                Location = new Point(150, yPosition),
+                Location = new Point(160, y),
                 AutoSize = true,
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.FromArgb(0, 122, 204)
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                ForeColor = WizardTheme.Colors.TextPrimary,
+                BackColor = Color.FromArgb(255, 252, 231),   // Light yellow background
+                Padding = new Padding(4, 2, 4, 2),
+                BorderStyle = BorderStyle.FixedSingle
             };
             scrollPanel.Controls.Add(lblInstallPath);
+            y += 40;
 
-            yPosition += 40;
+            var components = state.SelectedComponents
+             .Where(c => c.ManualConfiguration && c.Configuration.Count > 0)
+               .ToList();
 
-            // Get components that require manual configuration
-            var componentsNeedingConfig = state.SelectedComponents
-                .Where(c => c.ManualConfiguration && c.Configuration.Count > 0)
-                .ToList();
-
-            if (componentsNeedingConfig.Count == 0)
+            if (!components.Any())
             {
-                var noConfigLabel = new Label
-                {
-                    Text = "No manual configuration is required for the selected components.",
-                    Location = new Point(10, yPosition),
-                    AutoSize = true,
-                    Font = new Font("Segoe UI", 10),
-                    ForeColor = Color.Green
-                };
-                scrollPanel.Controls.Add(noConfigLabel);
+                AddLabel("No manual configuration is required for the selected components.", y, false, WizardTheme.Colors.Success);
+                AddLabel("\nClick 'Next' to proceed with installation.", y + 30, false, WizardTheme.Colors.TextSecondary, 10, italic: true);
+                scrollPanel.ResumeLayout();
+
+                // IMPORTANT: Make sure Next button is enabled even if no config is needed
                 UpdateFinishButtonState();
                 return;
             }
 
-            // Add info label (removed mandatory indicator)
-            var infoLabel = new Label
-            {
-                Text = "Configure the following settings (leave blank to use defaults):",
-                Location = new Point(10, yPosition),
-                AutoSize = true,
-                Font = new Font("Segoe UI", 8, FontStyle.Italic),
-                ForeColor = Color.FromArgb(85, 85, 85)
-            };
-            scrollPanel.Controls.Add(infoLabel);
-            yPosition += 25;
+            AddLabel("Configure the following settings (leave blank to use defaults):",
+                       y, false, WizardTheme.Colors.TextTertiary, 10, italic: true);
+            y += 28;
 
-            // Add separator
-            var separator = new Label
-            {
-                Text = "Component Configuration Settings:",
-                Location = new Point(10, yPosition),
-                AutoSize = true,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold)
-            };
-            scrollPanel.Controls.Add(separator);
-            yPosition += 35;
+            AddLabel("Component Configuration Settings:", y, true, WizardTheme.Colors.TextPrimary, 10, fontSize: 11);
+            y += 38;
 
-            // Create configuration fields for each component
-            foreach (var component in componentsNeedingConfig)
+            foreach (var component in components)
             {
-                // Component name label with groupbox-like styling
+                // Component header with nice styling
+                var componentHeader = new Panel
+                {
+                    Location = new Point(10, y),
+                    Size = new Size(760, 32),
+                    BackColor = Color.FromArgb(240, 248, 255)  // Light blue background
+                };
+
                 var componentLabel = new Label
                 {
                     Text = $"● {component.ComponentName}",
-                    Location = new Point(10, yPosition),
+                    Location = new Point(8, 6),
                     AutoSize = true,
                     Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(51, 51, 51)
+                    ForeColor = WizardTheme.Colors.TextPrimary,
+                    BackColor = Color.Transparent
                 };
-                scrollPanel.Controls.Add(componentLabel);
-                yPosition += 30;
+                componentHeader.Controls.Add(componentLabel);
+                scrollPanel.Controls.Add(componentHeader);
+                y += 38;
 
-                // Add config format and target info
-                var configInfoLabel = new Label
-                {
-                    Text = $"  Format: {component.ConfigFormat.ToUpper()} | Target: {component.ConfigTarget} | Mode: {component.ConfigurationMode}",
-                    Location = new Point(30, yPosition),
-                    AutoSize = true,
-                    Font = new Font("Segoe UI", 8),
-                    ForeColor = Color.Gray
-                };
-                scrollPanel.Controls.Add(configInfoLabel);
-                yPosition += 25;
-
-                // Flatten configuration for display
                 var flatConfig = ConfigurationHelper.FlattenConfiguration(component.Configuration);
-
-                // Sort keys to group array items together
-                var sortedKeys = flatConfig.Keys.OrderBy(k => k).ToList();
+                var keys = flatConfig.Keys.OrderBy(k => k).ToList();
 
                 string lastArrayGroup = string.Empty;
 
-                // Create a field for each configuration key-value pair
-                foreach (var configKey in sortedKeys)
+                foreach (var key in keys)
                 {
-                    string configValue = flatConfig[configKey];
+                    string value = flatConfig[key];
 
-                    // Check if this is an array item and add group header if needed
-                    if (ConfigurationHelper.IsArrayItem(configKey))
+                    if (ConfigurationHelper.IsArrayItem(key))
                     {
-                        // Extract array group (e.g., "Triggers[0]" from "Triggers[0].Type")
-                        int arrayEndIndex = configKey.IndexOf(']') + 1;
-                        string arrayGroup = configKey.Substring(0, arrayEndIndex);
-
-                        if (arrayGroup != lastArrayGroup)
+                        string group = key.Substring(0, key.IndexOf(']') + 1);
+                        if (group != lastArrayGroup)
                         {
-                            // Add array item group header
-                            var arrayHeader = new Label
+                            // Array group header
+                            var groupPanel = new Panel
                             {
-                                Text = $"  {ConfigurationHelper.GetHierarchicalDisplay(arrayGroup)}",
-                                Location = new Point(30, yPosition),
+                                Location = new Point(30, y),
+                                Size = new Size(740, 24),
+                                BackColor = Color.FromArgb(250, 250, 250)
+                            };
+
+                            var groupLabel = new Label
+                            {
+                                Text = $"  {ConfigurationHelper.GetHierarchicalDisplay(group)}",
+                                Location = new Point(4, 3),
                                 AutoSize = true,
                                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                                ForeColor = Color.FromArgb(70, 70, 70)
+                                ForeColor = WizardTheme.Colors.TextSecondary,
+                                BackColor = Color.Transparent
                             };
-                            scrollPanel.Controls.Add(arrayHeader);
-                            yPosition += 25;
-                            lastArrayGroup = arrayGroup;
+                            groupPanel.Controls.Add(groupLabel);
+                            scrollPanel.Controls.Add(groupPanel);
+                            y += 28;
+                            lastArrayGroup = group;
                         }
                     }
                     else
@@ -210,176 +215,185 @@ namespace Installer.UI
                         lastArrayGroup = string.Empty;
                     }
 
-                    // Get display label (remove parent prefixes)
-                    string displayLabel = GetFriendlyLabel(configKey);
-      
-                    // Check if this is a TriggerType field (read-only identifier)
-        bool isReadOnlyField = displayLabel.Equals("TriggerType", StringComparison.OrdinalIgnoreCase);
+                    string displayName = GetFriendlyLabel(key);
 
-    // Key/Setting label (removed mandatory indicator *)
-        var keyLabel = new Label
-         {
-          Text = isReadOnlyField ? $"  {displayLabel}: (Trigger Type)" : $"  {displayLabel}:",
-      Location = new Point(40, yPosition),
-      Width = 240,
-      Font = new Font("Segoe UI", 9),
-        ForeColor = isReadOnlyField ? Color.FromArgb(0, 122, 204) : Color.FromArgb(85, 85, 85)
-  };
-           scrollPanel.Controls.Add(keyLabel);
+                    // Check if field is read-only (TriggerType, ApplicationName, SchedulerId, Version)
+                    bool isReadOnly = ReadOnlyFields.Contains(displayName);
 
-            // Value textbox or label
-      if (isReadOnlyField)
-     {
-         // Display as read-only label for TriggerType
-             var valueLabel = new Label
-           {
-            Text = configValue,
-      Location = new Point(290, yPosition),
-  AutoSize = true,
-               Font = new Font("Segoe UI", 9, FontStyle.Bold),
-             ForeColor = Color.FromArgb(0, 122, 204),
-    BackColor = Color.FromArgb(240, 248, 255), // Light blue background
-             Padding = new Padding(5, 3, 5, 3),
-     BorderStyle = BorderStyle.FixedSingle
-      };
-      scrollPanel.Controls.Add(valueLabel);
- 
-     // Still store in configTextBoxes with the value for saving
-        string uniqueKey = $"{component.ComponentId}:{configKey}";
-              // Create a hidden textbox to maintain the value
-           var hiddenTextBox = new TextBox
-             {
-              Text = configValue,
-  Visible = false
-    };
-      configTextBoxes[uniqueKey] = hiddenTextBox;
-          }
-             else
-           {
-               // Regular editable textbox
-      var valueTextBox = new TextBox
-     {
-    Width = 350,
-        Location = new Point(290, yPosition - 2),
-     Font = new Font("Segoe UI", 9),
-           PlaceholderText = "Leave blank for default"
-      };
+                    // Field label
+                    var fieldLabel = new Label
+                    {
+                        Text = isReadOnly ? $"{displayName}: (Read-only)" : $"{displayName}:",
+                        Location = new Point(40, y + 2),
+                        AutoSize = false,
+                        Width = 240,
+                        Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                        ForeColor = isReadOnly ? WizardTheme.Colors.Primary : WizardTheme.Colors.TextPrimary
+                    };
+                    scrollPanel.Controls.Add(fieldLabel);
 
-                // Create unique key for this config item
-             string uniqueKey = $"{component.ComponentId}:{configKey}";
+                    if (isReadOnly)
+                    {
+                        // Read-only value with styling (displayed as label)
+                        var valLabel = new Label
+                        {
+                            Text = value,
+                            Location = new Point(290, y),
+                            AutoSize = true,
+                            Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                            ForeColor = WizardTheme.Colors.Primary,
+                            BackColor = Color.FromArgb(240, 248, 255),  // Light blue background
+                            Padding = new Padding(6, 3, 6, 3),
+                            BorderStyle = BorderStyle.FixedSingle
+                        };
+                        scrollPanel.Controls.Add(valLabel);
 
-     // Pre-populate with existing value
-      if (component.ConfigurationValues.ContainsKey(configKey))
-       {
- valueTextBox.Text = component.ConfigurationValues[configKey];
-               }
-         else
-              {
-      // Use default value from Configuration
-        valueTextBox.Text = configValue;
-       }
+                        // Store value in hidden textbox for saving
+                        configTextBoxes[$"{component.ComponentId}:{key}"] =
+                            new TextBox { Text = value, Visible = false };
 
-         // Add TextChanged event handler to update button state
-          valueTextBox.TextChanged += OnConfigValueChanged;
+                        y += 28;
+                    }
+                    else
+                    {
+                        // Editable textbox
+                        var tb = new TextBox
+                        {
+                            Width = 460,
+                            Location = new Point(290, y),
+                            Font = new Font("Segoe UI", 9),
+                            PlaceholderText = "Leave blank for default"
+                        };
+                        WizardTheme.StyleTextBox(tb);
 
-   // Store reference with component ID and config key
-                configTextBoxes[uniqueKey] = valueTextBox;
-   scrollPanel.Controls.Add(valueTextBox);
+                        tb.Text = component.ConfigurationValues.ContainsKey(key)
+                         ? component.ConfigurationValues[key]
+                           : value;
+
+                        tb.TextChanged += (_, __) => UpdateFinishButtonState();
+
+                        configTextBoxes[$"{component.ComponentId}:{key}"] = tb;
+                        scrollPanel.Controls.Add(tb);
+
+                        y += 28;
+
+                        // Add description label below the textbox if available
+                        if (FieldDescriptions.TryGetValue(displayName, out string? description))
+                        {
+                            var helpLabel = new Label
+                            {
+                                Text = $"ℹ️ {description}",
+                                Location = new Point(290, y),
+                                AutoSize = true,
+                                MaximumSize = new Size(460, 0),
+                                Font = new Font("Segoe UI", 8, FontStyle.Italic),
+                                ForeColor = Color.FromArgb(100, 100, 100),
+                                BackColor = Color.Transparent,
+                                Padding = new Padding(0, 2, 0, 4)
+                            };
+                            scrollPanel.Controls.Add(helpLabel);
+
+                            // Calculate actual height needed and adjust y position
+                            y += helpLabel.PreferredHeight + 8;
+                        }
+                        else
+                        {
+                            y += 8;
+                        }
+                    }
                 }
 
-         yPosition += 35;
-        }
-
-           yPosition += 20; // Extra spacing between components
-        }
-
-            // Set the scroll panel's AutoScrollMinSize to accommodate all controls
-          scrollPanel.AutoScrollMinSize = new Size(0, yPosition + 20);
-    
-            // Ensure scroll position is at the top
-   scrollPanel.AutoScrollPosition = new Point(0, 0);
-  scrollPanel.PerformLayout();
-
-       // Initial update of finish button state
-    UpdateFinishButtonState();
- }
-
-        private string GetFriendlyLabel(string configKey)
-        {
-            // Remove root "AppSettings" if present
-            if (configKey.StartsWith("AppSettings."))
-            {
-                configKey = configKey.Substring("AppSettings.".Length);
+                y += 20; // Extra spacing between components
             }
 
-            // For array items, only show the property name after the index
-            if (configKey.Contains("]."))
-            {
-                // Extract everything after "]."
-                int dotAfterBracket = configKey.IndexOf("].");
-                return configKey.Substring(dotAfterBracket + 2);
-            }
+            // 🔑 CRITICAL: allow scrolling
+            scrollPanel.AutoScrollMinSize = new Size(
+   scrollPanel.ClientSize.Width,
+      y + 40);
 
-            return configKey;
-        }
+            scrollPanel.ResumeLayout();
+            scrollPanel.PerformLayout();
+            scrollPanel.Refresh();
 
-        private void OnConfigValueChanged(object? sender, EventArgs e)
-        {
             UpdateFinishButtonState();
+        }
+
+        // ===================== HELPERS =====================
+        private Label AddLabel(
+                   string text,
+                   int y,
+       bool bold,
+                   Color? color = null,
+              int x = 10,
+              int fontSize = 10,
+            bool italic = false)
+        {
+            var lbl = new Label
+            {
+                Text = text,
+                Location = new Point(x, y),
+                AutoSize = true,
+                Font = new Font(
+      "Segoe UI",
+          fontSize,
+           (bold ? FontStyle.Bold : FontStyle.Regular) |
+                 (italic ? FontStyle.Italic : FontStyle.Regular)),
+                ForeColor = color ?? WizardTheme.Colors.TextPrimary
+            };
+            scrollPanel.Controls.Add(lbl);
+            return lbl;
+        }
+
+        private string GetFriendlyLabel(string key)
+        {
+            if (key.StartsWith("AppSettings."))
+                key = key.Substring("AppSettings.".Length);
+
+            if (key.Contains("]."))
+                return key.Substring(key.IndexOf("].") + 2);
+
+            return key;
+        }
+
+        private InstallerState? GetInstallerState()
+        {
+            return (FindForm() as WizardForm)?.State;
         }
 
         private void UpdateFinishButtonState()
         {
             var wizardForm = FindForm() as WizardForm;
-         if (wizardForm == null)
-          return;
+            if (wizardForm == null)
+                return;
 
-            // Always enable the button - fields are optional
-        var nextBtn = wizardForm.Controls.Find("nextBtn", true).FirstOrDefault() as Button;
-         if (nextBtn != null)
-      {
-       nextBtn.Enabled = true;
-         nextBtn.BackColor = Color.FromArgb(0, 122, 204);
+            var nextBtn = wizardForm.Controls.Find("nextBtn", true).FirstOrDefault() as Button;
+            if (nextBtn != null)
+            {
+                nextBtn.Enabled = true;
+                nextBtn.BackColor = WizardTheme.Colors.Primary;
             }
         }
 
-        private InstallerState? GetInstallerState()
-        {
-            var wizardForm = FindForm() as WizardForm;
-            return wizardForm?.State;
-        }
-
+        // ===================== SAVE =====================
         public bool ValidateAndSaveConfiguration()
         {
             var state = GetInstallerState();
             if (state == null)
                 return false;
 
-            // Save all configuration values (including empty ones)
             foreach (var kvp in configTextBoxes)
             {
-                string value = kvp.Value.Text.Trim();
-
-                // Extract component ID and config key
                 var parts = kvp.Key.Split(new[] { ':' }, 2);
                 string componentId = parts[0];
-                string configKey = parts[1];
+                string key = parts[1];
 
-                // Find the component and save the value (even if empty)
-                var component = state.SelectedComponents.FirstOrDefault(c => c.ComponentId == componentId);
+                var component = state.SelectedComponents
+                      .FirstOrDefault(c => c.ComponentId == componentId);
+
                 if (component != null)
-                {
-                    // Save value - empty string means use default
-                    component.ConfigurationValues[configKey] = value;
-                }
+                    component.ConfigurationValues[key] = kvp.Value.Text.Trim();
             }
 
-            return true;
-        }
-
-        public bool AreAllFieldsFilled()
-        {
-            // Fields are optional, so always return true
             return true;
         }
     }

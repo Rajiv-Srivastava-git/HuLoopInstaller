@@ -2,6 +2,7 @@
   {
     "ComponentId": "CLI",
     "ComponentName": "Huloop CLI",
+    "Description": "Command-line interface for HuLoop automation. Allows you to run workflows and automations from the terminal or scripts. Essential for scheduled tasks and integration with other systems.",
     "DownloadUrl": "https://qa.huloop.ai:/zips/HuLoopConsole.zip",
     "ComponentSizeMB": 750,
     "IsMandatory": false,
@@ -9,7 +10,7 @@
     "ManualConfiguration": true,
     "ConfigurationMode": "Patch",
     "ConfigFormat": "ini",
-    "ConfigTarget": "Config/server.cnf",
+    "ConfigTarget": "/HuLoopConsole/Config/server.cnf",
     "Configuration": {
       "ai.huloop.server.url": "https://qa.huloop.ai"
     }
@@ -17,6 +18,7 @@
   {
     "ComponentId": "DESKTOP_AGENT",
     "ComponentName": "Huloop Desktop Agent",
+    "Description": "Desktop automation agent that runs in the background. Enables automated desktop interactions, UI automation, and process orchestration. Requires Desktop Driver to function.",
     "DownloadUrl": "https://qa.huloop.ai:/zips/newAgent/HuLoop.zip",
     "ComponentSizeMB": 700,
     "IsMandatory": false,
@@ -30,6 +32,7 @@
   {
     "ComponentId": "DESKTOP_DRIVER",
     "ComponentName": "Huloop Desktop Driver",
+    "Description": "Low-level driver for desktop automation. Provides kernel-level access for mouse, keyboard, and screen interactions. Automatically installed with Desktop Agent.",
     "DownloadUrl": "https://qa.huloop.ai:/zips/HuLoopDesktopDriver.zip",
     "ComponentSizeMB": 80,
     "IsMandatory": false,
@@ -43,6 +46,7 @@
   {
     "ComponentId": "DESKTOP_RECORDER",
     "ComponentName": "Huloop Desktop Recorder",
+    "Description": "Screen and action recording tool for creating automation workflows. Capture user interactions and convert them into replayable automation scripts. Great for building workflows visually.",
     "DownloadUrl": "https://qa.huloop.ai:/zips/WindowsDesktopRecorder.zip",
     "ComponentSizeMB": 260,
     "IsMandatory": false,
@@ -56,10 +60,38 @@
   {
     "ComponentId": "SCHEDULER",
     "ComponentName": "Huloop Scheduler",
+    "Description": "Task scheduler for running workflows and automations on a schedule. Supports cron expressions for flexible scheduling. Integrates with HuLoop CLI to execute scheduled tasks automatically.",
     "DownloadUrl": "https://qa.huloop.ai/latest/HuloopScheduler.zip",
     "ComponentSizeMB": 120,
+    "PlatformDownloads": {
+      "win-x64": {
+        "DownloadUrl": "https://qa.huloop.ai/beta/Scheduler-win-x64.zip",
+        "SizeMB": 120,
+        "ConfigTarget": "/win-x64/appsettings.json"
+      },
+      "win-x86": {
+        "DownloadUrl": "https://qa.huloop.ai/beta/Scheduler-win-x86.zip",
+        "SizeMB": 115,
+        "ConfigTarget": "/win-x86/appsettings.json"
+      },
+      "win-arm64": {
+        "DownloadUrl": "https://qa.huloop.ai/latest/HuloopScheduler-win-arm64.zip",
+        "SizeMB": 125,
+        "ConfigTarget": "appsettings.json"
+      },
+      "linux-x64": {
+        "DownloadUrl": "https://qa.huloop.ai/latest/HuloopScheduler-linux-x64.tar.gz",
+        "SizeMB": 118,
+        "ConfigTarget": "appsettings.json"
+      },
+      "linux-arm64": {
+        "DownloadUrl": "https://qa.huloop.ai/latest/HuloopScheduler-linux-arm64.tar.gz",
+        "SizeMB": 122,
+        "ConfigTarget": "appsettings.json"
+      }
+    },
     "IsMandatory": false,
-    "IsConnectedWith": [ "CLI" ],
+    "IsConnectedWith": [],
     "ManualConfiguration": true,
     "ConfigurationMode": "Overwrite",
     "ConfigFormat": "json",
@@ -73,21 +105,21 @@
           {
             "TriggerType": "Workflow",
             "RunSchedule": "0 0 0 0 5",
-            "HostApiUrl": "https://qa.huloop.ai:8443/",
+            "HostApiUrl": "https://qa.huloop.ai:8445/",
             "ExePath": "..\\..\\HuloopCLI\\HuLoopCLI.exe",
             "LogFilePath": "..\\..\\Logs\\Workflow\\"
           },
           {
             "TriggerType": "Automation",
             "RunSchedule": "0 0 0 1 0",
-            "HostApiUrl": "https://qa.huloop.ai:8443/",
+            "HostApiUrl": "https://qa.huloop.ai:8447/",
             "ExePath": "..\\..\\HuloopCLI\\HuLoopCLI.exe",
             "LogFilePath": "..\\..\\Logs\\Automation\\"
           },
           {
             "TriggerType": "IAB",
             "RunSchedule": "0 0 0 0 10",
-            "HostApiUrl": "https://qa.huloop.ai:8443/",
+            "HostApiUrl": "https://qa.huloop.ai:8449/",
             "ExePath": "..\\..\\HuloopCLI\\HuLoopCLI.exe",
             "LogFilePath": "..\\..\\Logs\\IAB\\"
           }
